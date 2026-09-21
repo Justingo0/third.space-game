@@ -31,3 +31,4 @@ enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
 
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="mobile"
+environment/defaults/default_clear_color=Color(0.080783345, 0.080783345, 0.0807833, 1)
