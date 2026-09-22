@@ -1,5 +1,17 @@
 [gd_scene format=3 uid="uid://deinq6sk480pu"]
 
+[ext_resource type="Texture2D" uid="uid://f8rrum322feh" path="res://Assets/driller.png" id="1_h8pov"]
+[ext_resource type="Script" uid="uid://bot6kmnge57q3" path="res://Scripts/miner.gd" id="1_p7qq0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ljvdd"]
+size = Vector2(100, 100)
+
 [node name="miner" type="Area2D" unique_id=1778142923]
+texture_filter = 1
+script = ExtResource("1_p7qq0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=423838336]
+texture = ExtResource("1_h8pov")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=66224099]
+shape = SubResource("RectangleShape2D_ljvdd")
