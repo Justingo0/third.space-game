@@ -14,6 +14,9 @@ var building_object:PackedScene = preload("res://Scenes/block.tscn"):
 	get:
 		return building_object
 
+enum actions {placing, deleting, moving}
+var current_action
+
 func _ready() -> void:
 	set_build_cursor(building_object)
 
@@ -23,13 +26,19 @@ func _input(event: InputEvent) -> void:
 			mouse_starting_pos = get_global_mouse_position()
 			starting_cam_pos = position#.clamp(Vector2(limit_left, limit_top), Vector2(limit_right, limit_bottom))
 			dragging = true
+			current_action = actions.moving
 		if ((event.button_index == MOUSE_BUTTON_LEFT and not building) or event.button_index == MOUSE_BUTTON_MIDDLE) and event.is_released():
 			dragging = false
+			current_action = null
 	elif event is InputEventMouseMotion:
 		if dragging:
 			var viewport_size = get_viewport().get_visible_rect().size
 			position = (starting_cam_pos + (mouse_starting_pos - get_global_mouse_position())).clamp(Vector2(limit_left+viewport_size.x, limit_top+viewport_size.y), Vector2(limit_right-viewport_size.x, limit_bottom-viewport_size.y))
 			#position.clamp(Vector2(limit_left, limit_top), Vector2(limit_right, limit_bottom))
+	if event.is_action_released("Place"):
+		current_action = null
+	if event.is_action_released("Delete"):
+		current_action = null
 
 func _physics_process(_delta: float) -> void:
 	build_cursor.global_position = get_global_mouse_position().snapped(Vector2(64, 64))
@@ -54,14 +63,19 @@ func set_build_cursor(object:PackedScene):
 	highlight.position = Vector2.ZERO
 
 func place(object:PackedScene):
-	if not object or not building: return
+	if not object or not building or dragging: return
 	if build_cursor.get_child(0).has_overlapping_areas(): return
 	
 	var placed_object = object.instantiate()
 	get_tree().current_scene.add_child(placed_object)
 	placed_object.global_position = build_cursor.global_position
+	
+	current_action = actions.placing
 
 func delete():
+	if not building or dragging: return
 	var deleting_objects = build_cursor.get_child(0).get_overlapping_areas()
 	if len(deleting_objects) >= 1:
 		deleting_objects[0].queue_free()
+	
+	current_action = actions.deleting
