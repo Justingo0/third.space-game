@@ -7,7 +7,7 @@ extends Node2D
 @export var on = true
 
 var GRID_SIZE = 32
-var GRID_COLOR = Color(0.0, 0.757, 1.0, 0.22)
+var GRID_COLOR = Color.from_rgba8(0, 193, 255, 56)
 
 func _draw():
 	if on and camera:
