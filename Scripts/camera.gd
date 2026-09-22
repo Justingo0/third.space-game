@@ -1,0 +1,83 @@
+extends Camera2D
+
+@onready var build_cursor = $BuildCursor
+
+var mouse_starting_pos = Vector2.ZERO
+var starting_cam_pos = Vector2.ZERO
+var dragging := false
+
+var building := false
+var building_object:PackedScene = preload("res://Scenes/block.tscn"):
+	set(new_object):
+		building_object = new_object
+		set_build_cursor(building_object)
+	get:
+		return building_object
+
+enum actions {placing, deleting, moving}
+var current_action
+
+func _ready() -> void:
+	set_build_cursor(building_object)
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if ((event.button_index == MOUSE_BUTTON_LEFT and not building) or event.button_index == MOUSE_BUTTON_MIDDLE) and event.is_pressed():
+			mouse_starting_pos = get_global_mouse_position()
+			starting_cam_pos = position
+			dragging = true
+			current_action = actions.moving
+		if ((event.button_index == MOUSE_BUTTON_LEFT and not building) or event.button_index == MOUSE_BUTTON_MIDDLE) and event.is_released():
+			dragging = false
+			current_action = null
+	elif event is InputEventMouseMotion:
+		if dragging:
+			var viewport_size = get_viewport().get_visible_rect().size
+			position = (starting_cam_pos + (mouse_starting_pos - get_global_mouse_position())).clamp(Vector2(limit_left+viewport_size.x, limit_top+viewport_size.y), Vector2(limit_right-viewport_size.x, limit_bottom-viewport_size.y))
+	if event.is_action_released("Place"):
+		current_action = null
+	if event.is_action_released("Delete"):
+		current_action = null
+
+func _physics_process(_delta: float) -> void:
+	build_cursor.global_position = get_global_mouse_position().snapped(Vector2(64, 64))
+	
+	if Input.is_action_pressed("Place"):
+		place(building_object)
+	if Input.is_action_pressed("Delete"):
+		delete()
+
+func set_build_cursor(object:PackedScene):
+	if build_cursor.get_child_count() > 1:
+		for child in build_cursor.get_children():
+			child.queue_free()
+	
+	if not object:
+		building = false
+		return
+	building = true
+	
+	var highlight = object.instantiate()
+	build_cursor.add_child(highlight)
+	highlight.position = Vector2.ZERO
+
+func place(object:PackedScene):
+	if not object or not building or dragging: return
+	if build_cursor.get_child(0).has_overlapping_areas() or build_cursor.get_child(0).has_overlapping_bodies(): return
+	
+	var placed_object = object.instantiate()
+	get_tree().current_scene.add_child(placed_object)
+	placed_object.global_position = build_cursor.global_position
+	
+	current_action = actions.placing
+
+func delete():
+	if not building or dragging: return
+	var deleting_objects = []
+	deleting_objects.append_array(build_cursor.get_child(0).get_overlapping_bodies())
+	deleting_objects.append_array(build_cursor.get_child(0).get_overlapping_areas())
+	if len(deleting_objects) >= 1:
+		if deleting_objects[0].is_in_group("Block"):
+			deleting_objects[0].queue_free()
+	
+	current_action = actions.deleting
