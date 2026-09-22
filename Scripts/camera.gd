@@ -24,7 +24,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if ((event.button_index == MOUSE_BUTTON_LEFT and not building) or event.button_index == MOUSE_BUTTON_MIDDLE) and event.is_pressed():
 			mouse_starting_pos = get_global_mouse_position()
-			starting_cam_pos = position#.clamp(Vector2(limit_left, limit_top), Vector2(limit_right, limit_bottom))
+			starting_cam_pos = position
 			dragging = true
 			current_action = actions.moving
 		if ((event.button_index == MOUSE_BUTTON_LEFT and not building) or event.button_index == MOUSE_BUTTON_MIDDLE) and event.is_released():
@@ -34,7 +34,6 @@ func _input(event: InputEvent) -> void:
 		if dragging:
 			var viewport_size = get_viewport().get_visible_rect().size
 			position = (starting_cam_pos + (mouse_starting_pos - get_global_mouse_position())).clamp(Vector2(limit_left+viewport_size.x, limit_top+viewport_size.y), Vector2(limit_right-viewport_size.x, limit_bottom-viewport_size.y))
-			#position.clamp(Vector2(limit_left, limit_top), Vector2(limit_right, limit_bottom))
 	if event.is_action_released("Place"):
 		current_action = null
 	if event.is_action_released("Delete"):
@@ -64,7 +63,7 @@ func set_build_cursor(object:PackedScene):
 
 func place(object:PackedScene):
 	if not object or not building or dragging: return
-	if build_cursor.get_child(0).has_overlapping_areas(): return
+	if build_cursor.get_child(0).has_overlapping_areas() or build_cursor.get_child(0).has_overlapping_bodies(): return
 	
 	var placed_object = object.instantiate()
 	get_tree().current_scene.add_child(placed_object)
@@ -74,8 +73,11 @@ func place(object:PackedScene):
 
 func delete():
 	if not building or dragging: return
-	var deleting_objects = build_cursor.get_child(0).get_overlapping_areas()
+	var deleting_objects = []
+	deleting_objects.append_array(build_cursor.get_child(0).get_overlapping_bodies())
+	deleting_objects.append_array(build_cursor.get_child(0).get_overlapping_areas())
 	if len(deleting_objects) >= 1:
-		deleting_objects[0].queue_free()
+		if deleting_objects[0].is_in_group("Block"):
+			deleting_objects[0].queue_free()
 	
 	current_action = actions.deleting
