@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqty44k5evuo4"
-path="res://.godot/imported/rubyOre.jpg-dfad757f1703272cb63573252d0b39a7.ctex"
+uid="uid://d34ssrpml08sf"
+path="res://.godot/imported/rubyOre.png-30bea1a99ca35df8dee7b3bdcaf9232f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/rubyOre.jpg"
-dest_files=["res://.godot/imported/rubyOre.jpg-dfad757f1703272cb63573252d0b39a7.ctex"]
+source_file="res://Assets/rubyOre.png"
+dest_files=["res://.godot/imported/rubyOre.png-30bea1a99ca35df8dee7b3bdcaf9232f.ctex"]
 
 [params]
 
