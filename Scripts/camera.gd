@@ -17,6 +17,11 @@ var building_object:PackedScene = preload("res://Scenes/block.tscn"):
 enum actions {placing, deleting, moving}
 var current_action
 
+# PRIVATE SETTINGS
+var ZOOM_SPEED = 0.1
+var MIN_ZOOM = 0.5
+var MAX_ZOOM = 2
+
 func _ready() -> void:
 	set_build_cursor(building_object)
 
@@ -30,6 +35,10 @@ func _input(event: InputEvent) -> void:
 		if ((event.button_index == MOUSE_BUTTON_LEFT and not building) or event.button_index == MOUSE_BUTTON_MIDDLE) and event.is_released():
 			dragging = false
 			current_action = null
+		if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			zoom = clamp(zoom + Vector2(ZOOM_SPEED, ZOOM_SPEED), Vector2(MIN_ZOOM, MIN_ZOOM), Vector2(MAX_ZOOM, MAX_ZOOM))
+		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			zoom = clamp(zoom - Vector2(ZOOM_SPEED, ZOOM_SPEED), Vector2(MIN_ZOOM, MIN_ZOOM), Vector2(MAX_ZOOM, MAX_ZOOM))
 	elif event is InputEventMouseMotion:
 		if dragging:
 			var viewport_size = get_viewport().get_visible_rect().size
