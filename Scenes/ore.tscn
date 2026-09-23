@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://cbeydmwbdnvel"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p7o00"]
+size = Vector2(32, 32)
+
+[node name="Ore" type="CharacterBody2D" unique_id=492353068]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1146385207]
+shape = SubResource("RectangleShape2D_p7o00")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1234431372]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.5647059, 0, 1)

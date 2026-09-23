@@ -2,8 +2,8 @@ extends Camera2D
 
 @onready var build_cursor = $BuildCursor
 
-var mouse_starting_pos = Vector2.ZERO
-var starting_cam_pos = Vector2.ZERO
+var mouse_starting_pos := Vector2.ZERO
+var starting_cam_pos := Vector2.ZERO
 var dragging := false
 
 var building := false
@@ -13,11 +13,14 @@ var building_object:PackedScene = preload("res://Scenes/block.tscn"):
 		set_build_cursor(building_object)
 	get:
 		return building_object
+var last_object_built = null
 
 enum actions {placing, deleting, moving}
 var current_action
 
 # PRIVATE SETTINGS
+var GRID_SIZE = 64
+
 var ZOOM_SPEED = 0.1
 var MIN_ZOOM = 0.5
 var MAX_ZOOM = 2
@@ -45,16 +48,16 @@ func _input(event: InputEvent) -> void:
 			position = (starting_cam_pos + (mouse_starting_pos - get_global_mouse_position())).clamp(Vector2(limit_left+viewport_size.x, limit_top+viewport_size.y), Vector2(limit_right-viewport_size.x, limit_bottom-viewport_size.y))
 	if event.is_action_released("Place"):
 		current_action = null
+		last_object_built = null
 	if event.is_action_released("Delete"):
 		current_action = null
 
 func _physics_process(_delta: float) -> void:
-	build_cursor.global_position = get_global_mouse_position().snapped(Vector2(64, 64))
-	
 	if Input.is_action_pressed("Place"):
 		place(building_object)
 	if Input.is_action_pressed("Delete"):
 		delete()
+	build_cursor.global_position = get_global_mouse_position().snapped(Vector2(64, 64))
 
 func set_build_cursor(object:PackedScene):
 	if build_cursor.get_child_count() > 1:
@@ -69,14 +72,35 @@ func set_build_cursor(object:PackedScene):
 	var highlight = object.instantiate()
 	build_cursor.add_child(highlight)
 	highlight.position = Vector2.ZERO
+	
+	if "held" in highlight:
+		highlight.held = true
 
 func place(object:PackedScene):
 	if not object or not building or dragging: return
-	if build_cursor.get_child(0).has_overlapping_areas() or build_cursor.get_child(0).has_overlapping_bodies(): return
+	if build_cursor.get_child(0).has_overlapping_areas() or build_cursor.get_child(0).has_overlapping_bodies():
+		if last_object_built and build_cursor.global_position != last_object_built.global_position:
+			var direction = last_object_built.global_position.direction_to(get_global_mouse_position())
+			if abs(direction.x) > abs(direction.y):
+				direction = Vector2(sign(direction.x), 0)
+			else:
+				direction = Vector2(0, sign(direction.y))
+			last_object_built.rotation = deg_to_rad(rad_to_deg(direction.angle()) + 90)
+		return
 	
 	var placed_object = object.instantiate()
 	get_tree().current_scene.add_child(placed_object)
 	placed_object.global_position = build_cursor.global_position
+	
+	if last_object_built:
+		var direction = last_object_built.global_position.direction_to(placed_object.global_position)
+		if abs(direction.x) > abs(direction.y):
+			direction = Vector2(sign(direction.x), 0)
+		else:
+			direction = Vector2(0, sign(direction.y))
+		last_object_built.rotation = deg_to_rad(rad_to_deg(direction.angle()) + 90)
+		placed_object.rotation = deg_to_rad(rad_to_deg(direction.angle()) + 90)
+	last_object_built = placed_object
 	
 	current_action = actions.placing
 
