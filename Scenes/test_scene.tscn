@@ -1,11 +1,30 @@
 [gd_scene format=3 uid="uid://5rwqyho6c35a"]
 
 [ext_resource type="Script" uid="uid://dh7v8i5wudlty" path="res://Scripts/camera_2d.gd" id="1_3dogw"]
+[ext_resource type="Script" uid="uid://dfitym3yyvnfs" path="res://Scripts/test_scene.gd" id="1_hb2xm"]
 [ext_resource type="PackedScene" uid="uid://cbeydmwbdnvel" path="res://Scenes/ore.tscn" id="2_r5l72"]
+[ext_resource type="PackedScene" uid="uid://deinq6sk480pu" path="res://Scenes/miner.tscn" id="3_50ct6"]
 
 [node name="TestScene" type="Node2D" unique_id=652072020]
+script = ExtResource("1_hb2xm")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1307628029]
 script = ExtResource("1_3dogw")
 
 [node name="ore" parent="." unique_id=437668725 instance=ExtResource("2_r5l72")]
+
+[node name="ore2" parent="." unique_id=290854174 instance=ExtResource("2_r5l72")]
+position = Vector2(64, 0)
+
+[node name="ore3" parent="." unique_id=123376626 instance=ExtResource("2_r5l72")]
+position = Vector2(0, 64)
+
+[node name="ore4" parent="." unique_id=1272518972 instance=ExtResource("2_r5l72")]
+position = Vector2(64, 64)
+
+[node name="ore5" parent="." unique_id=831987491 instance=ExtResource("2_r5l72")]
+position = Vector2(-64, 0)
+
+[node name="miner" parent="." unique_id=1778142923 instance=ExtResource("3_50ct6")]
+
+[connection signal="area_entered" from="miner" to="Camera2D" method="_on_miner_area_entered"]

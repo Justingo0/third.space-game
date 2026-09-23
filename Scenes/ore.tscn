@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cbeydmwbdnvel"]
 
-[ext_resource type="Texture2D" uid="uid://bnuc4vwa2q4ah" path="res://Assets/rubyOre.jpg" id="1_b6xxr"]
+[ext_resource type="Texture2D" uid="uid://d34ssrpml08sf" path="res://Assets/rubyOre.png" id="1_b6xxr"]
 
 [sub_resource type="GDScript" id="GDScript_b6xxr"]
 script/source = "extends Node2D
@@ -23,16 +23,17 @@ func _process(delta: float) -> void:
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sar82"]
-size = Vector2(1026, 1028)
+size = Vector2(63, 63)
 
 [node name="ore" type="Area2D" unique_id=290854174]
 script = SubResource("GDScript_b6xxr")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=937095597]
+texture_filter = 1
+scale = Vector2(2.56, 2.56)
 texture = ExtResource("1_b6xxr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=368964846]
-position = Vector2(1, 2)
 shape = SubResource("RectangleShape2D_sar82")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

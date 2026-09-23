@@ -4,14 +4,20 @@
 [ext_resource type="Script" uid="uid://bot6kmnge57q3" path="res://Scripts/miner.gd" id="1_p7qq0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ljvdd"]
-size = Vector2(100, 100)
+size = Vector2(128, 128)
 
 [node name="miner" type="Area2D" unique_id=1778142923]
 texture_filter = 1
 script = ExtResource("1_p7qq0")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=423838336]
+scale = Vector2(1.26, 1.26)
 texture = ExtResource("1_h8pov")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=66224099]
 shape = SubResource("RectangleShape2D_ljvdd")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
+[connection signal="area_shape_entered" from="." to="." method="_on_area_shape_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
