@@ -2,12 +2,14 @@ extends Camera2D
 
 @onready var build_cursor = $BuildCursor
 
+@onready var ore = preload("res://Scenes/ore.tscn")
+
 var mouse_starting_pos := Vector2.ZERO
 var starting_cam_pos := Vector2.ZERO
 var dragging := false
 
 var building := false
-var building_object:PackedScene = preload("res://Scenes/block.tscn"):
+var building_object:PackedScene = preload("res://Scenes/conveyer.tscn"):
 	set(new_object):
 		building_object = new_object
 		set_build_cursor(building_object)
@@ -46,6 +48,10 @@ func _input(event: InputEvent) -> void:
 		if dragging:
 			var viewport_size = get_viewport().get_visible_rect().size
 			position = (starting_cam_pos + (mouse_starting_pos - get_global_mouse_position())).clamp(Vector2(limit_left+viewport_size.x, limit_top+viewport_size.y), Vector2(limit_right-viewport_size.x, limit_bottom-viewport_size.y))
+	if event.is_action_pressed("ui_accept"):
+		var new_ore = ore.instantiate()
+		new_ore.global_position = get_global_mouse_position()
+		get_tree().current_scene.add_child(new_ore)
 	if event.is_action_released("Place"):
 		current_action = null
 		last_object_built = null

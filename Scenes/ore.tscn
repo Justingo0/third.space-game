@@ -1,9 +1,13 @@
 [gd_scene format=3 uid="uid://cbeydmwbdnvel"]
 
+[ext_resource type="Script" uid="uid://steh6nc1ci08" path="res://Scripts/ore_scripts.gd" id="1_b6xxr"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p7o00"]
 size = Vector2(32, 32)
 
-[node name="Ore" type="CharacterBody2D" unique_id=492353068]
+[node name="Ore" type="CharacterBody2D" unique_id=492353068 groups=["Ore"]]
+z_index = 5
+script = ExtResource("1_b6xxr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1146385207]
 shape = SubResource("RectangleShape2D_p7o00")
