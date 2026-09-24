@@ -1,40 +1,22 @@
 [gd_scene format=3 uid="uid://cbeydmwbdnvel"]
 
-[ext_resource type="Texture2D" uid="uid://d34ssrpml08sf" path="res://Assets/rubyOre.png" id="1_b6xxr"]
+[ext_resource type="Script" uid="uid://bot6kmnge57q3" path="res://Scripts/miner.gd" id="1_ffglk"]
+[ext_resource type="Texture2D" uid="uid://f8rrum322feh" path="res://Assets/driller.png" id="2_eyye2"]
 
-[sub_resource type="GDScript" id="GDScript_b6xxr"]
-script/source = "extends Node2D
-var mouseEntered = false
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p7qq0"]
+size = Vector2(100, 100)
 
-func _on_mouse_entered() -> void:
-	mouseEntered = true
+[node name="Miner" type="Area2D" unique_id=545579719]
+script = ExtResource("1_ffglk")
 
-func _on_mouse_exited() -> void:
-	mouseEntered = false
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:	
-	if Input.is_action_just_pressed(\"selected\") and mouseEntered:
-		print(\"clicked\")
-"
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sar82"]
-size = Vector2(63, 63)
-
-[node name="ore" type="Area2D" unique_id=290854174]
-script = SubResource("GDScript_b6xxr")
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=937095597]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=308717136]
 texture_filter = 1
-scale = Vector2(2.56, 2.56)
-texture = ExtResource("1_b6xxr")
+scale = Vector2(1.28, 1.28)
+texture = ExtResource("2_eyye2")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=368964846]
-shape = SubResource("RectangleShape2D_sar82")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1945875335]
+scale = Vector2(1.28, 1.28)
+shape = SubResource("RectangleShape2D_p7qq0")
 
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
