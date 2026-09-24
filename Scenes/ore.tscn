@@ -7,6 +7,8 @@ size = Vector2(32, 32)
 
 [node name="Ore" type="CharacterBody2D" unique_id=492353068 groups=["Ore"]]
 z_index = 5
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_b6xxr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1146385207]

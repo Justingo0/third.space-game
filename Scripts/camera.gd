@@ -9,7 +9,7 @@ var starting_cam_pos := Vector2.ZERO
 var dragging := false
 
 var building := false
-var building_object:PackedScene = preload("res://Scenes/conveyer.tscn"):
+var building_object:PackedScene = preload("res://Scenes/conveyor.tscn"):
 	set(new_object):
 		building_object = new_object
 		set_build_cursor(building_object)
