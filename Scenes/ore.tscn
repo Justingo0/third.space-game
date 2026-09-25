@@ -1,21 +1,19 @@
 [gd_scene format=3 uid="uid://cbeydmwbdnvel"]
 
-[ext_resource type="Script" uid="uid://bot6kmnge57q3" path="res://Scripts/miner.gd" id="1_ffglk"]
-[ext_resource type="Texture2D" uid="uid://f8rrum322feh" path="res://Assets/driller.png" id="2_eyye2"]
+[ext_resource type="Texture2D" uid="uid://d34ssrpml08sf" path="res://Assets/rubyOre.png" id="1_b6xxr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p7qq0"]
-size = Vector2(100, 100)
+size = Vector2(121.09374, 121.09374)
 
-[node name="Miner" type="Area2D" unique_id=545579719]
-script = ExtResource("1_ffglk")
+[node name="Ore" type="Area2D" unique_id=545579719]
+scale = Vector2(2.56, 2.56)
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=308717136]
 texture_filter = 1
-scale = Vector2(1.28, 1.28)
-texture = ExtResource("2_eyye2")
+texture = ExtResource("1_b6xxr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1945875335]
-scale = Vector2(1.28, 1.28)
+scale = Vector2(0.2, 0.2)
 shape = SubResource("RectangleShape2D_p7qq0")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
