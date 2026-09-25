@@ -1,6 +1,7 @@
 extends Area2D
 
 var oreCount = 0
+var time = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -9,6 +10,8 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	position = get_global_mouse_position()
+	time += delta
+	print(time)
 
 func _on_area_entered(area: Area2D) -> void:
 	oreCount += 1
