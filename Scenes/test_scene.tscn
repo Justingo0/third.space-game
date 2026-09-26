@@ -117,7 +117,16 @@ position = Vector2(-64, -128)
 position = Vector2(320, 256)
 
 [node name="Ore6" parent="." unique_id=1863220620 instance=ExtResource("4_hb2xm")]
+position = Vector2(256, 64)
+
+[node name="Ore7" parent="." unique_id=1072710042 instance=ExtResource("4_hb2xm")]
 position = Vector2(256, 256)
+
+[node name="Ore8" parent="." unique_id=308652521 instance=ExtResource("4_hb2xm")]
+position = Vector2(320, 0)
+
+[node name="Ore9" parent="." unique_id=1850908103 instance=ExtResource("4_hb2xm")]
+position = Vector2(320, 64)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1254243288]
 
