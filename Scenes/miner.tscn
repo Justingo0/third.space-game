@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://bot6kmnge57q3" path="res://Scripts/miner.gd" id="1_p7qq0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p7qq0"]
-size = Vector2(98.4375, 98.4375)
+size = Vector2(96, 96)
 
 [node name="Miner" type="Area2D" unique_id=545579719 groups=["Block"]]
 script = ExtResource("1_p7qq0")

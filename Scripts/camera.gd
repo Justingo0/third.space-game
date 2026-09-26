@@ -87,6 +87,7 @@ func place(object:PackedScene):
 			last_object_built.rotation = deg_to_rad(rad_to_deg(direction.angle()) + 90)
 		return
 	
+	
 	var placed_object = object.instantiate()
 	get_tree().current_scene.add_child(placed_object)
 	placed_object.global_position = build_cursor.global_position
