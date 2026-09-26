@@ -119,10 +119,8 @@ position = Vector2(320, 256)
 [node name="Ore6" parent="." unique_id=1863220620 instance=ExtResource("4_hb2xm")]
 position = Vector2(256, 256)
 
-[node name="BuildMenu" parent="." unique_id=193295564 instance=ExtResource("5_ak5v8")]
-offset_left = 576.0
-offset_top = 324.0
-offset_right = 576.0
-offset_bottom = 324.0
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1254243288]
+
+[node name="BuildMenu" parent="CanvasLayer" unique_id=193295564 instance=ExtResource("5_ak5v8")]
 size_flags_horizontal = 8
 size_flags_vertical = 8

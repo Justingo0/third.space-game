@@ -9,9 +9,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	position = get_global_mouse_position()
-	time += delta
-	print(time)
+	pass
 
 func _on_area_entered(area: Area2D) -> void:
 	oreCount += 1

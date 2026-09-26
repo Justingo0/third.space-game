@@ -60,9 +60,8 @@ func _physics_process(_delta: float) -> void:
 	build_cursor.global_position = get_global_mouse_position().snapped(Vector2(64, 64))
 
 func set_build_cursor(object:PackedScene):
-	if build_cursor.get_child_count() > 1:
-		for child in build_cursor.get_children():
-			child.queue_free()
+	for child in build_cursor.get_children():
+		child.queue_free()
 	
 	if not object:
 		building = false
